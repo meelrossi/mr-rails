@@ -60,7 +60,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: myapp_test
+  database: WbooksApi_test
   pool: 5
   username: wbooks-api
   password: wbooks-api
