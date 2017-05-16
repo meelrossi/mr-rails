@@ -56,6 +56,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   #Timecop
   gem 'timecop'
+  #Faker for tests
+  gem 'faker'
 
 end
 
