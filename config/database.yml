@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: myapp_development
+  database: WbooksApi_test
   pool: 5
   username: wbooks-api
   password: wbooks-api
