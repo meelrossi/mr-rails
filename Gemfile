@@ -35,14 +35,28 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Devise authentication
+# Devise authentication https://github.com/plataformatec/devise
 gem 'devise'
+
+# wor authentication https://github.com/wolox/wor-authentication
+gem 'wor-authentication'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   # Rubocop
   gem 'rubocop', '~> 0.48.1', require: false
+
+  ## Testing
+  # Rspec
+  gem 'rspec-rails', '~> 3.5'
+  # Database cleaner
+  gem 'database_cleaner'
+  # Factory girl
+  gem 'factory_girl_rails'
+  #Timecop
+  gem 'timecop'
+
 end
 
 group :development do
