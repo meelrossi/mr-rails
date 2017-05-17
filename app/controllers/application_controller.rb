@@ -3,6 +3,13 @@ class ApplicationController < ActionController::Base
   include Wor::Authentication::Controller
   before_action :authenticate_request
 
+  rescue_from Wor::Authentication::Exceptions::NotRenewableTokenError,
+              with: :render_not_renewable_token
+  rescue_from Wor::Authentication::Exceptions::ExpiredTokenError,
+              with: :render_expired_token
+  rescue_from Wor::Authentication::Exceptions::EntityCustomValidationError,
+              with: :render_entity_invalid_custom_validation
+
   def authenticate_entity(params)
     entity = User.find_by(email: params[:email])
     return nil unless entity.present? && entity.valid_password?(params[:password])
