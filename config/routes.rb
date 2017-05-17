@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   post '/' => 'authentication#create'
   post '/renew' => 'authentication#renew'
   post '/invalidate_all' => 'authentication#invalidate_all'
+
+  #book-model routes
+  get '/books' => 'book#index'
+  get '/books/:id' => 'book#show'
 end
