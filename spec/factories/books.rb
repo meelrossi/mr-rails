@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :book do
-    genre         'MyString'
-    author        'MyString'
-    image         'MyString'
-    title         'MyString'
-    publisher     'MyString'
-    year          'MyString'
+    genre         'Romance'
+    author        'Author Lastname'
+    image         'image.jpg'
+    title         'Harry Potter'
+    publisher     'A Publisher'
+    year          '2005'
   end
 end
