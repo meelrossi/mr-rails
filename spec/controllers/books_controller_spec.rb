@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-describe BooksController, type: :controller do
+describe BooksController do
   include_context 'Authenticated User'
 
   describe 'GET #index' do
     context 'When fetching all the books' do
-      let!(:books) { FactoryGirl.create_list(:book, 3) }
+      let!(:books) { create_list(:book, 3) }
 
       before do
         get :index
@@ -33,7 +33,7 @@ describe BooksController, type: :controller do
 
       it 'responses with the book json' do
         expect(response_body.to_json).to eq BookSerializer.new(
-          book, root: false
+          book
         ).to_json
       end
 
