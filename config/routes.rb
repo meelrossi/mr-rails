@@ -8,6 +8,5 @@ Rails.application.routes.draw do
   post '/invalidate_all' => 'authentication#invalidate_all'
 
   #book-model routes
-  get '/books' => 'book#index'
-  get '/books/:id' => 'book#show'
+  resources :books, only: [:show, :index]
 end

@@ -28,4 +28,10 @@ class ApplicationController < ActionController::Base
     entity.trackable_value = Devise.friendly_token
     entity.save
   end
+
+  def paginate(rel)
+    page = params[:page].to_i
+    limit = params[:limit].to_i
+    rel.limit(limit).offset(page * limit)
+  end
 end
