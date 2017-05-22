@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
   def index
-    books = paginate(Book)
-    render json: books, status: 200
+    json = paginate(Book)
+    render json: json, status: 200
   end
 
   def show

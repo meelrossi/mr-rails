@@ -32,6 +32,12 @@ class ApplicationController < ActionController::Base
   def paginate(rel)
     page = params[:page].to_i
     limit = params[:limit].to_i
-    rel.limit(limit).offset(page * limit)
+    unless limit.between?(ApplicationHelper::MIN_PAGE_SIZE, ApplicationHelper::MAX_PAGE_SIZE)
+      limit = ApplicationHelper::MAX_PAGE_SIZE
+    end
+    values = rel.limit(limit).offset(page * limit)
+    { values: ActiveModelSerializers::SerializableResource.new(values),
+      page: page,
+      limit: limit }
   end
 end
