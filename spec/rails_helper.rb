@@ -58,4 +58,6 @@ RSpec.configure do |config|
   def response_body
     JSON.parse(response.body)
   end
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 end

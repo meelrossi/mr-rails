@@ -57,11 +57,12 @@ group :development, :test do
   gem 'database_cleaner'
   # Factory girl
   gem 'factory_girl_rails'
-  #Timecop
+  # Timecop
   gem 'timecop'
-  #Faker for tests
+  # Faker for tests
   gem 'faker'
-
+  # Shoulda matchers
+  gem 'shoulda-matchers'
 end
 
 group :development do
