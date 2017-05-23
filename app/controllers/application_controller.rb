@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include Wor::Authentication::Controller
   before_action :authenticate_request
+  protect_from_forgery with: :null_session
+
+  MIN_PAGE_SIZE = 1
+  MAX_PAGE_SIZE = 100
 
   rescue_from Wor::Authentication::Exceptions::NotRenewableTokenError,
               with: :render_not_renewable_token
@@ -33,5 +37,15 @@ class ApplicationController < ActionController::Base
   def entity_custom_validation_invalidate_all_value(entity)
     entity.trackable_value = Devise.friendly_token
     entity.save
+  end
+
+  def paginate(rel)
+    page = params[:page].to_i
+    limit = params[:limit].to_i
+    limit.between?(MIN_PAGE_SIZE, MAX_PAGE_SIZE) || limit = MAX_PAGE_SIZE
+    values = rel.limit(limit).offset(page * limit)
+    { values: ActiveModelSerializers::SerializableResource.new(values),
+      page: page,
+      limit: limit }
   end
 end

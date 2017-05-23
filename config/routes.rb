@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   post '/' => 'authentication#create'
   post '/renew' => 'authentication#renew'
   post '/invalidate_all' => 'authentication#invalidate_all'
+
+  #book-model routes
+  resources :books, only: [:show, :index]
 end
