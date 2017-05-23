@@ -99,8 +99,4 @@ describe AuthenticationController do
       end
     end
   end
-
-  def response_body
-    JSON.parse(response.body)
-  end
 end
