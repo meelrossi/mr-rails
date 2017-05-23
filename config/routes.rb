@@ -9,4 +9,7 @@ Rails.application.routes.draw do
 
   #book-model routes
   resources :books, only: [:show, :index]
+
+  #rent-model routes
+  resources :rents, only: [:index, :create]
 end
