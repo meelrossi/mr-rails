@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_request
   protect_from_forgery with: :null_session
 
+  MIN_PAGE_SIZE = 1
+  MAX_PAGE_SIZE = 100
+
   def authenticate_entity(params)
     entity = User.find_by(email: params[:email])
     return nil unless entity.present? && entity.valid_password?(params[:password])
@@ -32,9 +35,7 @@ class ApplicationController < ActionController::Base
   def paginate(rel)
     page = params[:page].to_i
     limit = params[:limit].to_i
-    unless limit.between?(ApplicationHelper::MIN_PAGE_SIZE, ApplicationHelper::MAX_PAGE_SIZE)
-      limit = ApplicationHelper::MAX_PAGE_SIZE
-    end
+    limit.between?(MIN_PAGE_SIZE, MAX_PAGE_SIZE) || limit = MAX_PAGE_SIZE
     values = rel.limit(limit).offset(page * limit)
     { values: ActiveModelSerializers::SerializableResource.new(values),
       page: page,
