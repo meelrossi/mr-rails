@@ -47,6 +47,9 @@ gem 'active_model_serializers', '~> 0.10.0'
 # Sent email with Sidekiq
 gem 'sidekiq'
 
+# Active Admin https://github.com/activeadmin/activeadmin
+gem 'activeadmin', github: 'activeadmin'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
