@@ -5,7 +5,9 @@ class RentsController < ApplicationController
   end
 
   def create
-    if Rent.create(rent_params).valid?
+    rent = Rent.create(rent_params)
+    if rent.valid?
+      ApplicationMailer.new_rent_notification(rent).deliver_later
       head :ok
     else
       render json: { error: 'Not able to create rent' }, status: :bad_request
