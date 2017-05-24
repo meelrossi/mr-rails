@@ -1,0 +1,12 @@
+es:
+  new_rent: 'Nuevo Alquiler'
+  greeting: 'Hola'
+  rent_success: 'Has alquilado con éxito'
+  genre: 'Genero'
+  author: 'Autor'
+  publisher: 'Editor'
+  year: 'Año'
+  rent_date: 'Fecha de alquiler'
+  rent_start_date: 'Inicio de alquiler'
+  rent_end_date: 'Fin de alquiler'
+  rent_subject: 'Felicitaciones! El alquiler se ha realizado con éxito.'

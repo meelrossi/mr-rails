@@ -1,0 +1,12 @@
+en:
+  new_rent: 'New Rent'
+  greeting: 'Hi'
+  rent_success: 'You have rented successfully'
+  genre: 'Genre'
+  author: 'Author'
+  publisher: 'Publisher'
+  year: 'Year'
+  rent_date: 'Rent date'
+  rent_start_date: 'Rent start date'
+  rent_end_date: 'Rent end date'
+  rent_subject: 'Congatulations! You have rented successfully'

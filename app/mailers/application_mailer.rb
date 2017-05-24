@@ -4,6 +4,8 @@ class ApplicationMailer < ActionMailer::Base
 
   def new_rent_notification(rent)
     @rent = rent
-    mail to: rent.user.email, subject: 'Felicitaciones! El alquiler se ha realizado con éxito.'
+    I18n.with_locale(rent.user.locale) do
+      mail to: rent.user.email, subject: I18n.t('rent_subject')
+    end
   end
 end
