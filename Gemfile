@@ -50,6 +50,9 @@ gem 'sidekiq'
 # Active Admin https://github.com/activeadmin/activeadmin
 gem 'activeadmin', github: 'activeadmin'
 
+# Pundit https://github.com/elabs/pundit
+gem "pundit"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -71,6 +74,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   # Variables .env https://github.com/bkeepers/dotenv
   gem 'dotenv-rails'
+
 end
 
 group :development do
