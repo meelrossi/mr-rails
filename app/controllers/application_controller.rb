@@ -2,10 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include Wor::Authentication::Controller
   before_action :authenticate_request
+  attr_reader :current_user
   protect_from_forgery with: :null_session
-
-  MIN_PAGE_SIZE = 1
-  MAX_PAGE_SIZE = 100
+  before_action :set_locale
 
   rescue_from Wor::Authentication::Exceptions::NotRenewableTokenError,
               with: :render_not_renewable_token
@@ -27,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_authenticable_entity(entity_payload_returned_object)
-    User.find_by(email: entity_payload_returned_object.fetch(ENTITY_KEY))
+    @current_user ||= User.find_by(email: entity_payload_returned_object.fetch(ENTITY_KEY))
   end
 
   def entity_custom_validation_value(entity)
@@ -39,13 +38,7 @@ class ApplicationController < ActionController::Base
     entity.save
   end
 
-  def paginate(rel)
-    page = params[:page].to_i
-    limit = params[:limit].to_i
-    limit.between?(MIN_PAGE_SIZE, MAX_PAGE_SIZE) || limit = MAX_PAGE_SIZE
-    values = rel.limit(limit).offset(page * limit)
-    { values: ActiveModelSerializers::SerializableResource.new(values),
-      page: page,
-      limit: limit }
+  def set_locale
+    I18n.locale = current_user.try(:locale) || I18n.default_locale
   end
 end
