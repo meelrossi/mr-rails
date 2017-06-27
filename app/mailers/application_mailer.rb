@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'noreply@training.wolox.com.ar'
+  default from: Rails.application.secrets.mailer_username
   layout 'mailer'
 
   def new_rent_notification(rent)
