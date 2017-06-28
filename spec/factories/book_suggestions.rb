@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :book_suggestion do
-    editorial 'MyString'
+    editorial 'Editorial'
     price 1.5
-    author 'MyString'
-    title 'MyString'
-    link 'MyString'
-    publisher 'MyString'
-    year 'MyString'
+    author 'author'
+    title 'title'
+    link 'link'
+    publisher 'publisher'
+    year '2017'
     user nil
   end
 end
