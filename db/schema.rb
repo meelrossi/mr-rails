@@ -32,20 +32,6 @@ ActiveRecord::Schema.define(version: 20170628154013) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "book_suggestions", force: :cascade do |t|
-    t.string   "editorial"
-    t.float    "price"
-    t.string   "author"
-    t.string   "title"
-    t.string   "link"
-    t.string   "publisher"
-    t.string   "year"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_book_suggestions_on_user_id", using: :btree
-  end
-
   create_table "books", force: :cascade do |t|
     t.string   "genre"
     t.string   "author"
@@ -89,7 +75,6 @@ ActiveRecord::Schema.define(version: 20170628154013) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "book_suggestions", "users"
   add_foreign_key "rents", "books"
   add_foreign_key "rents", "users"
 end
