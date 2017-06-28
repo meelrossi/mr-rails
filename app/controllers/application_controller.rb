@@ -1,13 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  include Wor::Authentication::Controller
   include Pundit
-
+  include Wor::Authentication::Controller
+  attr_reader :current_user
   before_action :authenticate_request
   protect_from_forgery with: :null_session
-
-  MIN_PAGE_SIZE = 1
-  MAX_PAGE_SIZE = 100
+  before_action :set_locale
 
   rescue_from Wor::Authentication::Exceptions::NotRenewableTokenError,
               with: :render_not_renewable_token
@@ -15,6 +13,8 @@ class ApplicationController < ActionController::Base
               with: :render_expired_token
   rescue_from Wor::Authentication::Exceptions::EntityCustomValidationError,
               with: :render_entity_invalid_custom_validation
+  rescue_from Pundit::NotAuthorizedError,
+              with: :user_not_authorized
 
   def authenticate_entity(params)
     entity = User.find_by(email: params[:email])
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_authenticable_entity(entity_payload_returned_object)
-    User.find_by(email: entity_payload_returned_object.fetch(ENTITY_KEY))
+    @current_user ||= User.find_by(email: entity_payload_returned_object.fetch(ENTITY_KEY))
   end
 
   def entity_custom_validation_value(entity)
@@ -41,13 +41,13 @@ class ApplicationController < ActionController::Base
     entity.save
   end
 
-  def paginate(rel)
-    page = params[:page].to_i
-    limit = params[:limit].to_i
-    limit.between?(MIN_PAGE_SIZE, MAX_PAGE_SIZE) || limit = MAX_PAGE_SIZE
-    values = rel.limit(limit).offset(page * limit)
-    { values: ActiveModelSerializers::SerializableResource.new(values),
-      page: page,
-      limit: limit }
+  def set_locale
+    I18n.locale = current_user.try(:locale) || I18n.default_locale
+  end
+
+  private
+
+  def user_not_authorized
+    render json: { error: 'Not allowed' }, status: :forbidden
   end
 end

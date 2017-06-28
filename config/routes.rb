@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   resources :books, only: [:show, :index]
 
   #rent-model routes
-  resources :rents, only: [:index, :create]
+  resources :rents, only: [:show, :index, :create]
 end

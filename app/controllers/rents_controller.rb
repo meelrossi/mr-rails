@@ -1,11 +1,17 @@
 class RentsController < ApplicationController
   def index
-    rents = paginate(Rent)
+    rents = current_user.rents.where(filter_params).paginate(params)
     render json: rents, status: :ok
   end
 
+  def show
+    rent = Rent.find_by(id: params[:id])
+    authorize rent
+    render json: rent, status: :ok
+  end
+
   def create
-    rent = Rent.create(rent_params)
+    rent = current_user.rents.create(create_params)
     if rent.valid?
       ApplicationMailer.new_rent_notification(rent).deliver_later
       head :ok
@@ -14,7 +20,13 @@ class RentsController < ApplicationController
     end
   end
 
-  def rent_params
-    params.require(:rent).permit(:book_id, :user_id, :from, :to)
+  private
+
+  def filter_params
+    params.permit(:book_id, :from, :to)
+  end
+
+  def create_params
+    params.require(:rent).permit(:book_id, :from, :to)
   end
 end
