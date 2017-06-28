@@ -1,0 +1,17 @@
+h1 <%= t('new_rent') %>
+p <%= t('greeting') %> <%= @rent.user.first_name %> <%= @rent.user.last_name %>
+h4 <%= t('rent_success') %>
+
+br
+
+h3 <%= @rent.book.title %>
+p <%= t('genre') %>: <%= @rent.book.genre %>
+p <%= t('author') %>: <%= @rent.book.author %>
+p <%= t('publisher') %>: <%= @rent.book.publisher %>
+p <%= t('year') %>: <%= @rent.book.year %>
+
+br
+
+h4 <%= t('rent_date') %>:  <%= @rent.created_at %>
+h4 <%= t('rent_start_date') %>:  <%= @rent.from %>
+h4 <%= t('rent_end_date') %>:  <%= @rent.to %>

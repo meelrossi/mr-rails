@@ -2,8 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include Wor::Authentication::Controller
   before_action :authenticate_request
-  protect_from_forgery with: :null_session
   attr_reader :current_user
+  protect_from_forgery with: :null_session
+  before_action :set_locale
 
   rescue_from Wor::Authentication::Exceptions::NotRenewableTokenError,
               with: :render_not_renewable_token
@@ -35,5 +36,9 @@ class ApplicationController < ActionController::Base
   def entity_custom_validation_invalidate_all_value(entity)
     entity.trackable_value = Devise.friendly_token
     entity.save
+  end
+
+  def set_locale
+    I18n.locale = current_user.try(:locale) || I18n.default_locale
   end
 end
