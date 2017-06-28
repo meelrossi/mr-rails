@@ -16,5 +16,5 @@ Rails.application.routes.draw do
   resources :rents, only: [:index, :create]
 
   # book-suggestion-model routes
-  resources :book-suggestions, only: [:create]
+  resources :book_suggestions, only: [:create]
 end
