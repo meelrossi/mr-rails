@@ -1,18 +1,26 @@
 class RentsController < ApplicationController
   def index
-    rents = paginate(Rent)
+    rents = current_user.rents.where(filter_params).paginate(params)
     render json: rents, status: :ok
   end
 
   def create
-    if Rent.create(rent_params).valid?
+    rent = current_user.rents.create(create_params)
+    if rent.valid?
+      ApplicationMailer.new_rent_notification(rent).deliver_later
       head :ok
     else
       render json: { error: 'Not able to create rent' }, status: :bad_request
     end
   end
 
-  def rent_params
-    params.require(:rent).permit(:book_id, :user_id, :from, :to)
+  private
+
+  def filter_params
+    params.permit(:book_id, :from, :to)
+  end
+
+  def create_params
+    params.require(:rent).permit(:book_id, :from, :to)
   end
 end

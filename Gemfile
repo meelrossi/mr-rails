@@ -44,6 +44,9 @@ gem 'wor-authentication'
 # Serializer
 gem 'active_model_serializers', '~> 0.10.0'
 
+# Sent email with Sidekiq
+gem 'sidekiq'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -63,6 +66,8 @@ group :development, :test do
   gem 'faker'
   # Shoulda matchers
   gem 'shoulda-matchers'
+  # Variables .env https://github.com/bkeepers/dotenv
+  gem 'dotenv-rails'
 end
 
 group :development do
