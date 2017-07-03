@@ -4,6 +4,12 @@ class RentsController < ApplicationController
     render json: rents, status: :ok
   end
 
+  def show
+    rent = Rent.find_by(id: params[:id])
+    authorize rent
+    render json: rent, status: :ok
+  end
+
   def create
     rent = current_user.rents.create(create_params)
     if rent.valid?

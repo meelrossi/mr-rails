@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  include Pundit
   include Wor::Authentication::Controller
   before_action :authenticate_request
   attr_reader :current_user
@@ -12,6 +13,8 @@ class ApplicationController < ActionController::Base
               with: :render_expired_token
   rescue_from Wor::Authentication::Exceptions::EntityCustomValidationError,
               with: :render_entity_invalid_custom_validation
+  rescue_from Pundit::NotAuthorizedError,
+              with: :user_not_authorized
 
   def authenticate_entity(params)
     entity = User.find_by(email: params[:email])
@@ -40,5 +43,11 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
+  end
+
+  private
+
+  def user_not_authorized
+    render json: { error: 'Not allowed' }, status: :forbidden
   end
 end
